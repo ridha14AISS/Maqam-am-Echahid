@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maqa'am Echahid — The Martyrs' Memorial</title>
+    <title>مقام الشهيد — النصب التذكاري للشهداء</title>
 
     <!-- أيقونة الموقع (Favicon) -->
     <link rel="icon" type="image/png" href="final/logo_transparent.png">
@@ -270,7 +270,6 @@
         /* ========================================== */
         .tour-section {
             padding: 40px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
             position: relative;
         }
 
@@ -446,7 +445,6 @@
         /* ========================================== */
         .beijing-section {
             padding: 40px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
             position: relative;
         }
 
@@ -613,7 +611,6 @@
         /* ========================================== */
         .india-section {
             padding: 40px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
             position: relative;
         }
 
@@ -756,7 +753,6 @@
             align-items: center;
             gap: 40px;
             padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .social-icon {
@@ -781,7 +777,6 @@
         /* ========================================== */
         .visual-grid-section {
             padding: 40px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
             position: relative;
         }
 
@@ -860,23 +855,37 @@
         /* ========================================== */
         .main-footer {
             width: 100%;
-            background-color: rgba(2, 2, 2, 0.4);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 50px 0 10px 0;
-            /* Reduced bottom padding */
+            background: linear-gradient(to bottom, rgba(2, 2, 2, 0) 0%, rgba(2, 2, 2, 0) 80%, rgba(2, 2, 2, 0.85) 95%, rgba(2, 2, 2, 1) 100%);
+            padding: 95vh 0 20px 0;
             position: relative;
             z-index: 10;
         }
 
+        .main-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 80%, black 95%);
+            mask-image: linear-gradient(to bottom, transparent 0%, transparent 80%, black 95%);
+            pointer-events: none;
+        }
+
         .footer-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            gap: 40px;
-            align-items: flex-start;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
             direction: rtl;
-            /* Right-to-left for Arabic */
+        }
+
+        .footer-links-group {
+            display: flex;
+            gap: 120px;
         }
 
         .footer-col {
@@ -890,7 +899,6 @@
 
         .footer-title {
             color: #ff8c00;
-            /* Orange color */
             font-size: 19px;
             font-weight: 500;
             margin-bottom: 25px;
@@ -904,13 +912,6 @@
             gap: 15px;
         }
 
-        .footer-links.horizontal-links {
-            flex-direction: row;
-            justify-content: center;
-            gap: 35px;
-            margin-top: 10px;
-        }
-
         .footer-links a {
             color: #d1d5d3;
             text-decoration: none;
@@ -921,11 +922,6 @@
         .footer-links a:hover {
             color: #ffffff;
             transform: translateX(-5px);
-        }
-
-        .footer-links.horizontal-links a:hover {
-            transform: translateY(-2px);
-            color: #ff8c00;
         }
 
         .footer-logo-col {
@@ -956,12 +952,15 @@
         }
 
         .footer-bottom {
-            margin-top: 40px;
-            /* Reduced top margin to compact footer */
-            text-align: center;
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             font-size: 13px;
             color: #a0aab2;
             direction: ltr;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .footer-bottom strong {
@@ -1217,14 +1216,14 @@
     <!-- شريط التنقل العلوي -->
     <header>
         <nav class="nav-pill">
-            <a href="#about-monument" class="nav-link">History</a>
-            <a href="#architecture" class="nav-link">Architecture</a>
+            <a href="#about-monument" class="nav-link">التاريخ</a>
+            <a href="#architecture" class="nav-link">العمارة</a>
             <div class="nav-logo" aria-label="Monument Logo">
                 <img src="final/logo_transparent.png" alt="Logo"
                     style="width: 34px; height: 34px; object-fit: contain; filter: drop-shadow(0 0 2px rgba(255,255,255,0.5));">
             </div>
-            <a href="#legacy" class="nav-link">Legacy</a>
-            <a href="#significance" class="nav-link">Significance</a>
+            <a href="#legacy" class="nav-link">الإرث</a>
+            <a href="#significance" class="nav-link">الأهمية</a>
         </nav>
     </header>
 
@@ -1233,22 +1232,21 @@
         <div class="container">
             <div class="hero-grid">
                 <div class="hero-left">
-                    <h1 class="hero-title">Maqa'am Echahid</h1>
-                    <p class="hero-subtitle">The Martyrs' Memorial of Algeria.</p>
+                    <h1 class="hero-title">مقام الشهيد</h1>
+                    <p class="hero-subtitle">النصب التذكاري لشهداء الجزائر.</p>
                 </div>
                 <div class="hero-right">
-                    <a href="#about-monument" class="btn-explore">Explore the Monument</a>
+                    <a href="#about-monument" class="btn-explore">استكشف المعلم</a>
                     <div class="cards-container">
                         <div class="glass-card">
                             <p class="desc-text">
-                                An iconic concrete monument commemorating the Algerian War of Independence, standing as
-                                a proud symbol of the nation's resilience.
+                                معلم خرساني أيقوني يخلد ذكرى حرب الاستقلال الجزائرية، يقف كرمز فخور لصمود الأمة.
                             </p>
                         </div>
                         <div class="glass-card">
                             <p class="desc-text">
-                                Dominating the Algiers skyline, its three soaring palm leaves shelter the "Eternal
-                                Flame" and honor the heroes who fought for freedom.
+                                يهيمن على أفق العاصمة، وتأوي سعفاته الثلاث المرتفعة "الشعلة الأبدية" وتكرم الأبطال الذين
+                                قاتلوا من أجل الحرية.
                             </p>
                         </div>
                     </div>
@@ -1262,19 +1260,19 @@
         <div class="container">
             <div class="section-header">
                 <div class="line"></div>
-                <h2 class="section-title">ABOUT THE MONUMENT</h2>
+                <h2 class="section-title">حول المعلم</h2>
                 <div class="line"></div>
             </div>
             <div class="tour-grid">
                 <div class="tour-left">
                     <p class="tour-p">
-                        Erected in 1982 on the 20th anniversary of Algeria's independence, the Martyrs' Memorial is a
-                        breathtaking structure overlooking the Bay of Algiers.
+                        شُيّد في عام 1982 بمناسبة الذكرى العشرين لاستقلال الجزائر، مقام الشهيد هو هيكل مذهل يطل على خليج
+                        الجزائر.
                     </p>
                     <p class="tour-p">
-                        Designed to represent three standing palm leaves, the monument houses the "Eternal Flame" and
-                        features statues of soldiers representing different stages of the
-                        <span class="highlight">liberation struggle.</span>
+                        صُمم ليمثل ثلاث سعفات نخيل واقفة، ويضم المعلم "الشعلة الأبدية" ويتميز بتماثيل لجنود يمثلون مراحل
+                        مختلفة من
+                        <span class="highlight">كفاح التحرير.</span>
                     </p>
                 </div>
                 <div class="tour-right">
@@ -1282,8 +1280,8 @@
                         <div class="timeline-node">
                             <div class="timeline-dot"></div>
                             <div class="timeline-label">
-                                <div class="days">Height: 92 Meters</div>
-                                <div class="city">The Structure</div>
+                                <div class="days">الارتفاع: 92 متر</div>
+                                <div class="city">الهيكل</div>
                             </div>
                             <div class="node-photos osaka">
                                 <img src="photos/Screenshot 2026-07-25 112716.png" alt="Monument View">
@@ -1292,8 +1290,8 @@
                         <div class="timeline-node">
                             <div class="timeline-dot"></div>
                             <div class="timeline-label left-side">
-                                <div class="days">The Center</div>
-                                <div class="city">Eternal Flame</div>
+                                <div class="days">المركز</div>
+                                <div class="city">الشعلة الأبدية</div>
                             </div>
                             <div class="node-photos kyoto">
                                 <img src="photos/Screenshot 2026-07-25 112739.png" alt="Flame">
@@ -1302,8 +1300,8 @@
                         <div class="timeline-node">
                             <div class="timeline-dot"></div>
                             <div class="timeline-label">
-                                <div class="days">Underneath</div>
-                                <div class="city">The Museum</div>
+                                <div class="days">بالأسفل</div>
+                                <div class="city">المتحف</div>
                             </div>
                             <div class="node-photos tokyo">
                                 <img src="photos/Screenshot 2026-07-25 112821.png" alt="Museum">
@@ -1321,43 +1319,40 @@
             <div class="beijing-grid">
                 <div class="beijing-left">
                     <div>
-                        <h2 class="beijing-headline">Iconic<br>Architecture</h2>
+                        <h2 class="beijing-headline">هندسة معمارية<br>أيقونية</h2>
                         <a href="#" class="play-link">
                             <svg class="play-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="1.5">
                                 <circle cx="12" cy="12" r="10" />
                                 <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" />
                             </svg>
-                            <span>Explore the Design</span>
+                            <span>استكشف التصميم</span>
                         </a>
                     </div>
                     <p class="beijing-history-text">
-                        Conceived by the Algerian painter Bachir Yelles and Polish sculptor Marian Konieczny, and built
-                        by Lavalin.
+                        من تصميم الرسام الجزائري بشير يلس والنحات البولندي ماريان كونييتشني، وبناء شركة لافالين.
                     </p>
                 </div>
                 <div class="beijing-cards-grid">
                     <div class="beijing-card">
                         <div class="card-number">01</div>
-                        <h3>Three Palm Leaves</h3>
-                        <p>Rising up and coming together to symbolize the country's unity and its agricultural roots.
-                        </p>
+                        <h3>ثلاث سعفات نخيل</h3>
+                        <p>ترتفع وتلتقي معًا لترمز إلى وحدة البلاد وجذورها الزراعية.</p>
                     </div>
                     <div class="beijing-card">
                         <div class="card-number">02</div>
-                        <h3>The Statues</h3>
-                        <p>Three massive bronze statues at the base represent the resistance, the national liberation
-                            army, and the modern army.</p>
+                        <h3>التماثيل</h3>
+                        <p>ثلاثة تماثيل برونزية ضخمة عند القاعدة تمثل المقاومة، وجيش التحرير الوطني، والجيش الحديث.</p>
                     </div>
                     <div class="beijing-card">
                         <div class="card-number">03</div>
-                        <h3>El Mujahid Museum</h3>
-                        <p>An underground museum offering deep insights into the Algerian struggle for independence.</p>
+                        <h3>متحف المجاهد</h3>
+                        <p>متحف تحت الأرض يقدم رؤى عميقة حول الكفاح الجزائري من أجل الاستقلال.</p>
                     </div>
                     <div class="beijing-card">
                         <div class="card-number">04</div>
-                        <h3>The Esplanade</h3>
-                        <p>A sprawling plaza surrounding the monument that gathers locals and tourists alike.</p>
+                        <h3>الساحة</h3>
+                        <p>ساحة واسعة تحيط بالمعلم تجمع السكان المحليين والسياح على حد سواء.</p>
                     </div>
                 </div>
             </div>
@@ -1370,45 +1365,43 @@
             <div class="india-grid">
                 <div class="india-left">
                     <div>
-                        <h2 class="india-headline">A Nation's<br>Pride</h2>
+                        <h2 class="india-headline">فخر<br>الأمة</h2>
                         <a href="#" class="play-link">
                             <svg class="play-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="1.5">
                                 <circle cx="12" cy="12" r="10" />
                                 <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" />
                             </svg>
-                            <span>WATCH THE HISTORY</span>
+                            <span>شاهد التاريخ</span>
                         </a>
                     </div>
                     <p class="india-desc-text">
-                        More than a monument, Maqa'am Echahid is the heart of Algiers. It serves as a reminder of the
-                        price of freedom and a beacon of hope for future generations.
+                        أكثر من مجرد معلم، مقام الشهيد هو قلب الجزائر العاصمة. إنه بمثابة تذكير بثمن الحرية ومنارة أمل
+                        للأجيال القادمة.
                     </p>
                 </div>
                 <div class="india-cards-grid">
                     <div class="india-card">
                         <div class="card-number">01</div>
-                        <h3>Independence Day</h3>
-                        <p>The site becomes a focal point for national celebrations and solemn remembrances every July
-                            5th.</p>
+                        <h3>عيد الاستقلال</h3>
+                        <p>يصبح الموقع نقطة محورية للاحتفالات الوطنية والذكريات المهيبة في الخامس من يوليو من كل عام.
+                        </p>
                     </div>
                     <div class="india-card">
                         <div class="card-number">02</div>
-                        <h3>Panoramic Views</h3>
-                        <p>Situated on a hill, it offers unparalleled views of the Mediterranean Sea and the historic
-                            Casbah.</p>
+                        <h3>إطلالات بانورامية</h3>
+                        <p>يقع على تلة، ويوفر إطلالات لا مثيل لها على البحر الأبيض المتوسط والقصبة التاريخية.</p>
                     </div>
                     <div class="india-card">
                         <div class="card-number">03</div>
-                        <h3>Jardin d'Essai</h3>
-                        <p>Accessible via cable car, it lies close to the lush and historic Botanical Garden of Hamma.
+                        <h3>حديقة التجارب</h3>
+                        <p>يمكن الوصول إليها عبر التلفريك، وتقع بالقرب من حديقة التجارب التاريخية والمورقة في الحامة.
                         </p>
                     </div>
                     <div class="india-card">
                         <div class="card-number">04</div>
-                        <h3>Cultural Hub</h3>
-                        <p>A central point for understanding Algerian history and experiencing the spirit of the
-                            capital.</p>
+                        <h3>مركز ثقافي</h3>
+                        <p>نقطة مركزية لفهم التاريخ الجزائري وتجربة روح العاصمة.</p>
                     </div>
                 </div>
             </div>
@@ -1445,18 +1438,16 @@
                 <!-- العمود الأيسر (بطاقتان متراصفتان) -->
                 <div class="col-left">
                     <div class="glass-card">
-                        <h3 style="font-size: 16px; font-weight: 500; margin-bottom: 8px;">National Identity</h3>
+                        <h3 style="font-size: 16px; font-weight: 500; margin-bottom: 8px;">الهوية الوطنية</h3>
                         <p style="font-size: 13px; line-height: 1.5; color: rgba(255, 255, 255, 0.65);">
-                            The monument stands as a core symbol of the Algerian nation's enduring spirit and rich
-                            heritage.
+                            يقف المعلم كرمز أساسي لروح الأمة الجزائرية الدائمة وتراثها الغني.
                         </p>
                     </div>
 
                     <div class="glass-card">
-                        <h3 style="font-size: 16px; font-weight: 500; margin-bottom: 8px;">Historical Memorial</h3>
+                        <h3 style="font-size: 16px; font-weight: 500; margin-bottom: 8px;">نصب تذكاري تاريخي</h3>
                         <p style="font-size: 13px; line-height: 1.5; color: rgba(255, 255, 255, 0.65);">
-                            A solemn tribute to the countless martyrs who sacrificed everything during the fight for
-                            independence.
+                            تكريم مهيب لعدد لا يحصى من الشهداء الذين ضحوا بكل شيء خلال الكفاح من أجل الاستقلال.
                         </p>
                     </div>
                 </div>
@@ -1468,18 +1459,16 @@
                 <!-- العمود الأيمن (بطاقتان متراصفتان) -->
                 <div class="col-right">
                     <div class="glass-card">
-                        <h3 style="font-size: 16px; font-weight: 500; margin-bottom: 8px;">Architectural Marvel</h3>
+                        <h3 style="font-size: 16px; font-weight: 500; margin-bottom: 8px;">أعجوبة معمارية</h3>
                         <p style="font-size: 13px; line-height: 1.5; color: rgba(255, 255, 255, 0.65);">
-                            A masterpiece of modern concrete engineering, blending traditional symbolism with monumental
-                            scale.
+                            تحفة من الهندسة الخرسانية الحديثة، تمزج بين الرمزية التقليدية والحجم الضخم.
                         </p>
                     </div>
 
                     <div class="glass-card">
-                        <h3 style="font-size: 16px; font-weight: 500; margin-bottom: 8px;">Tourist Destination</h3>
+                        <h3 style="font-size: 16px; font-weight: 500; margin-bottom: 8px;">وجهة سياحية</h3>
                         <p style="font-size: 13px; line-height: 1.5; color: rgba(255, 255, 255, 0.65);">
-                            Drawing millions of visitors each year to witness the panoramic views and delve into
-                            profound history.
+                            تستقطب ملايين الزوار كل عام لمشاهدة الإطلالات البانورامية والتعمق في التاريخ العميق.
                         </p>
                     </div>
                 </div>
@@ -1497,24 +1486,27 @@
         <div class="container">
             <div class="footer-grid">
 
-                <!-- العمود الأيمن (الروابط ذات الصلة) -->
-                <div class="footer-col footer-related">
-                    <h3 class="footer-title">روابط ذات صلة</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">رئاسة الجمهورية</a></li>
-                        <li><a href="#">مصالح الوزير الأول</a></li>
-                        <li><a href="#">وزارة المجاهدين و ذوي الحقوق</a></li>
-                    </ul>
-                </div>
+                <div class="footer-links-group">
+                    <!-- العمود الأيمن (الروابط ذات الصلة) -->
+                    <div class="footer-col footer-related">
+                        <h3 class="footer-title">روابط ذات صلة</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">رئاسة الجمهورية</a></li>
+                            <li><a href="#">مصالح الوزير الأول</a></li>
+                            <li><a href="#">وزارة المجاهدين و ذوي الحقوق</a></li>
+                        </ul>
+                    </div>
 
-                <!-- العمود الأوسط (روابط سريعة) -->
-                <div class="footer-col footer-nav">
-                    <ul class="footer-links horizontal-links">
-                        <li><a href="#">الرئيسية</a></li>
-                        <li><a href="#">من نحن</a></li>
-                        <li><a href="#">كلمة المدير</a></li>
-                        <li><a href="#">إتصل بنا</a></li>
-                    </ul>
+                    <!-- العمود الأوسط سابقاً أصبح مع اليمين (روابط سريعة) -->
+                    <div class="footer-col footer-nav">
+                        <h3 class="footer-title">روابط سريعة</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">الرئيسية</a></li>
+                            <li><a href="#">من نحن</a></li>
+                            <li><a href="#">كلمة المدير</a></li>
+                            <li><a href="#">إتصل بنا</a></li>
+                        </ul>
+                    </div>
                 </div>
 
                 <!-- العمود الأيسر (الشعار) -->
@@ -1528,7 +1520,8 @@
             </div>
 
             <div class="footer-bottom">
-                Copyright &copy; 2026 المتحف الوطني للمجاهد | Designed by <strong>ridha aissani</strong>
+                <span>Designed by <strong>ridha aissani</strong></span>
+                <span>Copyright &copy; 2026 المتحف الوطني للمجاهد</span>
             </div>
         </div>
 
