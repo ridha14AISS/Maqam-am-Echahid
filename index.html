@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maqa'am Echahid — The Martyrs' Memorial</title>
+
+    <!-- استيراد الخطوط المطلوبة: DM Sans للجسم و Playfair Display للعناوين المائلة -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@1,400..700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* Canvas Animation Background */
+        canvas#scroll-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* تهيئة الصفحة العامة */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-y: overlay;
+        }
+
+        body {
+            /* Removed background-color: #000000 to show canvas behind */
+            color: #ffffff;
+            /* نصوص بيضاء بالكامل */
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Hide Default Scrollbar */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        html {
+            scrollbar-width: none;
+        }
+
+        /* Custom In-Page Scrollbar */
+        .custom-scroll-track {
+            position: fixed;
+            top: 0;
+            right: 2px;
+            width: 4px;
+            height: 100vh;
+            background: transparent;
+            z-index: 9999;
+            pointer-events: none; /* Allows clicking through */
+        }
+        
+        .custom-scroll-thumb {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            background: #ff8c00;
+            border-radius: 10px;
+        }
+
+        /* الحاويات الرئيسية */
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* حاوية المحاذاة الأفقية */
+        .container {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding-left: 6%;
+            padding-right: 6%;
+        }
+
+        /* ========================================== */
+        /* 1. شريط التنقل العلوي الثابت المموه */
+        /* ========================================== */
+        header {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding-top: 30px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .nav-pill {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 36px;
+            padding: 12px 40px;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background-color: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            flex-wrap: nowrap;
+            white-space: nowrap;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.75);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: #ffffff;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+        }
+
+        /* ========================================== */
+        /* 2. القسم الأول: البانر الرئيسي الترحيبي */
+        /* ========================================== */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 140px;
+            padding-bottom: 80px;
+            position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 60px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hero-title {
+            font-size: clamp(3.5rem, 6vw, 5.2rem);
+            font-weight: 500;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: -0.01em;
+        }
+
+        .hero-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 24px;
+        }
+
+        .btn-explore {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 13px 28px;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.04);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.25s ease;
+        }
+
+        .btn-explore:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.35);
+        }
+
+        .cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 440px;
+        }
+
+        .glass-card {
+            position: relative;
+            padding: 24px 22px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+        
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, rgba(255, 140, 0, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 140, 0, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+
+        .glass-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .desc-text {
+            font-size: 13.5px;
+            line-height: 1.55;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        /* ========================================== */
+        /* 3. القسم الثاني: حول الرحلة (About the Tour) */
+        /* ========================================== */
+        .tour-section {
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .section-header .line {
+            flex-grow: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.15);
+            max-width: 320px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(1.8rem, 3vw, 2.8rem);
+            font-weight: 500;
+            color: #ffffff;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .tour-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: flex-start;
+        }
+
+        .tour-left {
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+            padding-top: 20px;
+        }
+
+        .tour-p {
+            font-size: 1.15rem;
+            line-height: 1.75;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 450px;
+        }
+
+        .highlight {
+            color: #d4af37;
+            font-weight: 500;
+        }
+
+        .tour-right {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .timeline {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            padding: 80px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateX(-50%);
+        }
+
+        .timeline-node {
+            position: relative;
+            margin-bottom: 160px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-node:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            width: 10px;
+            height: 10px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            z-index: 5;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .timeline-label {
+            position: absolute;
+            left: 55%;
+            top: 50%;
+            transform: translateY(-50%);
+            white-space: nowrap;
+        }
+
+        .timeline-label.left-side {
+            left: auto;
+            right: 55%;
+            text-align: right;
+        }
+
+        .timeline-label .days {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 2px;
+        }
+
+        .timeline-label .city {
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .node-photos {
+            position: absolute;
+            pointer-events: none;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .node-photos.osaka {
+            right: 55%;
+        }
+
+        .node-photos.osaka img {
+            width: 160px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .node-photos.kyoto {
+            left: 55%;
+        }
+
+        .node-photos.kyoto img {
+            width: 160px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .node-photos.tokyo {
+            right: 55%;
+        }
+
+        .node-photos.tokyo img {
+            width: 160px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* ========================================== */
+        /* 4. القسم الثالث: بكين (Travel And Inspire Your Life) */
+        /* ========================================== */
+        .beijing-section {
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+        }
+
+        .beijing-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 60px;
+            align-items: stretch;
+        }
+
+        .beijing-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .beijing-headline {
+            font-size: clamp(2.5rem, 4.5vw, 4rem);
+            font-weight: 500;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+        }
+
+        .play-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 15px;
+            margin-top: 24px;
+            transition: color 0.25s ease;
+        }
+
+        .play-link:hover {
+            color: #ffffff;
+        }
+
+        .play-icon-svg {
+            width: 44px;
+            height: 44px;
+            color: #ffffff;
+            opacity: 0.9;
+            transition: transform 0.2s ease;
+        }
+
+        .play-link:hover .play-icon-svg {
+            transform: scale(1.08);
+        }
+
+        .beijing-history-text {
+            font-size: 14.5px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.55);
+            max-width: 380px;
+            margin-top: 60px;
+        }
+
+        .beijing-cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-content: center;
+        }
+
+        .beijing-card {
+            position: relative;
+            padding: 30px 24px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+
+        .beijing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, rgba(255, 140, 0, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        .beijing-card:hover {
+            border-color: rgba(255, 140, 0, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .beijing-card:hover::before {
+            opacity: 1;
+        }
+
+        .beijing-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .beijing-card .card-number {
+            position: absolute;
+            top: -15px;
+            right: 5px;
+            font-size: 90px;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.03);
+            transition: color 0.4s ease, transform 0.4s ease;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .beijing-card:hover .card-number {
+            color: rgba(255, 140, 0, 0.08);
+            transform: scale(1.1) translate(-5px, 5px);
+        }
+
+        .beijing-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .beijing-card h3::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #ff8c00;
+            border-radius: 50%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .beijing-card:hover h3::before {
+            transform: scale(1.5);
+            box-shadow: 0 0 10px rgba(255, 140, 0, 0.8);
+        }
+
+        .beijing-card p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .beijing-left .play-icon-svg {
+            color: #ff8c00;
+            filter: drop-shadow(0 0 8px rgba(255, 140, 0, 0.4));
+        }
+
+        /* ========================================== */
+        /* 5. القسم الرابع: الهند (Discover The India) */
+        /* ========================================== */
+        .india-section {
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+        }
+
+        .india-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 60px;
+            align-items: stretch;
+            margin-bottom: 30px;
+        }
+
+        .india-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .india-headline {
+            font-size: clamp(2.5rem, 4.5vw, 4rem);
+            font-weight: 500;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+        }
+
+        .india-desc-text {
+            font-size: 14.5px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.55);
+            max-width: 440px;
+            margin-top: 30px;
+        }
+
+        .india-cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-content: center;
+        }
+
+        .india-card {
+            position: relative;
+            padding: 30px 24px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+
+        .india-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, rgba(255, 140, 0, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        .india-card:hover {
+            border-color: rgba(255, 140, 0, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .india-card:hover::before {
+            opacity: 1;
+        }
+
+        .india-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .india-card .card-number {
+            position: absolute;
+            top: -15px;
+            right: 5px;
+            font-size: 90px;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.03);
+            transition: color 0.4s ease, transform 0.4s ease;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .india-card:hover .card-number {
+            color: rgba(255, 140, 0, 0.08);
+            transform: scale(1.1) translate(-5px, 5px);
+        }
+
+        .india-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .india-card h3::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #ff8c00;
+            border-radius: 50%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .india-card:hover h3::before {
+            transform: scale(1.5);
+            box-shadow: 0 0 10px rgba(255, 140, 0, 0.8);
+        }
+
+        .india-card p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .india-left .play-icon-svg {
+            color: #ff8c00;
+            filter: drop-shadow(0 0 8px rgba(255, 140, 0, 0.4));
+        }
+
+        .social-bar {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .social-icon {
+            color: rgba(255, 255, 255, 0.5);
+            transition: color 0.3s ease, transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .social-icon:hover {
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        .social-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* ========================================== */
+        /* 6. القسم الخامس الجديد: الفراغ المركزي والـ 4 بطاقات */
+        /* ========================================== */
+        .visual-grid-section {
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+        }
+
+        .three-col-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr 1fr;
+            /* مساحة أكبر قليلاً في المنتصف للعنصر البصري */
+            gap: 40px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .col-left,
+        .col-right {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* تصميم المساحة المركزية المحجوزة للمستقبل */
+        .col-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 380px;
+            position: relative;
+        }
+
+        /* إطار منقط خفيف وأنيق لتمثيل المساحة البصرية المحجوزة */
+        .future-visual-placeholder {
+            width: 100%;
+            height: 100%;
+            min-height: 380px;
+            border: 1px dashed rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(4px);
+        }
+
+        .placeholder-text {
+            font-size: 13px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* ========================================== */
+        /* 7. شريط شعارات العلامات التجارية */
+        /* ========================================== */
+        .brand-logos-section {
+            width: 100%;
+            padding: 60px 0;
+            background-color: rgba(2, 2, 2, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logos-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+            opacity: 0.45;
+        }
+
+        .logos-wrapper svg {
+            height: 22px;
+            fill: #ffffff;
+        }
+
+        /* التكيف البرمجي مع الشاشات المتنوعة */
+        @media (max-width: 991px) {
+
+            .hero-grid,
+            .tour-grid,
+            .beijing-grid,
+            .india-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .three-col-grid {
+                grid-template-columns: 1fr;
+                /* ترتيب عمودي ذكي للهواتف */
+                gap: 30px;
+            }
+
+            .col-center {
+                min-height: 250px;
+                order: -1;
+                /* رفع مساحة التصميم المستقبلي للأعلى على الشاشات الصغيرة */
+            }
+
+            .future-visual-placeholder {
+                min-height: 250px;
+            }
+
+            .beijing-cards-grid,
+            .india-cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tour-left {
+                gap: 40px;
+            }
+
+            .node-photos {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding-top: 15px;
+            }
+            .nav-pill {
+                gap: 16px;
+                padding: 10px 20px;
+            }
+            .nav-link {
+                font-size: 13px;
+            }
+            .hero-title {
+                font-size: clamp(2.5rem, 10vw, 3.5rem);
+            }
+            .hero-subtitle {
+                font-size: clamp(1.2rem, 5vw, 1.8rem);
+            }
+            .beijing-card, .india-card, .glass-card {
+                padding: 20px 18px;
+            }
+            .beijing-card .card-number, .india-card .card-number {
+                font-size: 60px;
+                top: -5px;
+            }
+            .timeline-node {
+                margin-bottom: 90px;
+            }
+            .beijing-left, .india-left {
+                text-align: center;
+                align-items: center;
+            }
+            .beijing-history-text, .india-desc-text {
+                margin-top: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-pill {
+                gap: 8px;
+                padding: 8px 12px;
+            }
+            .nav-link {
+                font-size: 11px;
+            }
+            .nav-logo svg {
+                width: 16px !important;
+                height: 16px !important;
+            }
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .hero-section {
+                padding-top: 100px;
+            }
+            .beijing-headline, .india-headline, .section-title {
+                font-size: 2rem;
+            }
+            /* Left-align timeline for small mobile screens */
+            .timeline::before {
+                left: 0;
+            }
+            .timeline-dot {
+                left: 0;
+            }
+            .timeline-label {
+                left: 20px;
+                white-space: normal;
+                width: calc(100vw - 60px);
+            }
+            .timeline-label.left-side {
+                right: auto;
+                left: 20px;
+                text-align: left;
+            }
+        }
+
+        /* Scroll Animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: opacity, transform;
+        }
+
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="scroll-image"></canvas>
+
+    <!-- شريط التنقل العلوي -->
+    <header>
+        <nav class="nav-pill">
+            <a href="#about-monument" class="nav-link">History</a>
+            <a href="#architecture" class="nav-link">Architecture</a>
+            <div class="nav-logo" aria-label="Monument Logo">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    style="width: 20px; height: 20px;">
+                    <path d="M12 2L8 22H16L12 2Z" fill="#FFFFFF" />
+                </svg>
+            </div>
+            <a href="#legacy" class="nav-link">Legacy</a>
+            <a href="#significance" class="nav-link">Significance</a>
+        </nav>
+    </header>
+
+    <!-- القسم الأول: البانر الرئيسي -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-left">
+                    <h1 class="hero-title">Maqa'am Echahid</h1>
+                    <p class="hero-subtitle">The Martyrs' Memorial of Algeria.</p>
+                </div>
+                <div class="hero-right">
+                    <a href="#about-monument" class="btn-explore">Explore the Monument</a>
+                    <div class="cards-container">
+                        <div class="glass-card">
+                            <p class="desc-text">
+                                An iconic concrete monument commemorating the Algerian War of Independence, standing as
+                                a proud symbol of the nation's resilience.
+                            </p>
+                        </div>
+                        <div class="glass-card">
+                            <p class="desc-text">
+                                Dominating the Algiers skyline, its three soaring palm leaves shelter the "Eternal
+                                Flame" and honor the heroes who fought for freedom.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- القسم الثاني: حول الرحلة (About The Tour) -->
+    <section id="about-monument" class="tour-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="line"></div>
+                <h2 class="section-title">ABOUT THE MONUMENT</h2>
+                <div class="line"></div>
+            </div>
+            <div class="tour-grid">
+                <div class="tour-left">
+                    <p class="tour-p">
+                        Erected in 1982 on the 20th anniversary of Algeria's independence, the Martyrs' Memorial is a
+                        breathtaking structure overlooking the Bay of Algiers.
+                    </p>
+                    <p class="tour-p">
+                        Designed to represent three standing palm leaves, the monument houses the "Eternal Flame" and
+                        features statues of soldiers representing different stages of the
+                        <span class="highlight">liberation struggle.</span>
+                    </p>
+                </div>
+                <div class="tour-right">
+                    <div class="timeline">
+                        <div class="timeline-node">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-label">
+                                <div class="days">Height: 92 Meters</div>
+                                <div class="city">The Structure</div>
+                            </div>
+                            <div class="node-photos osaka">
+                                <img src="photos/Screenshot 2026-07-25 112716.png"
+                                    alt="Monument View">
+                            </div>
+                        </div>
+                        <div class="timeline-node">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-label left-side">
+                                <div class="days">The Center</div>
+                                <div class="city">Eternal Flame</div>
+                            </div>
+                            <div class="node-photos kyoto">
+                                <img src="photos/Screenshot 2026-07-25 112739.png"
+                                    alt="Flame">
+                            </div>
+                        </div>
+                        <div class="timeline-node">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-label">
+                                <div class="days">Underneath</div>
+                                <div class="city">The Museum</div>
+                            </div>
+                            <div class="node-photos tokyo">
+                                <img src="photos/Screenshot 2026-07-25 112821.png"
+                                    alt="Museum">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- القسم الثالث: بكين (Travel And Inspire Your Life) -->
+    <section id="architecture" class="beijing-section">
+        <div class="container">
+            <div class="beijing-grid">
+                <div class="beijing-left">
+                    <div>
+                        <h2 class="beijing-headline">Iconic<br>Architecture</h2>
+                        <a href="#" class="play-link">
+                            <svg class="play-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10" />
+                                <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" />
+                            </svg>
+                            <span>Explore the Design</span>
+                        </a>
+                    </div>
+                    <p class="beijing-history-text">
+                        Conceived by the Algerian painter Bachir Yelles and Polish sculptor Marian Konieczny, and built
+                        by Lavalin.
+                    </p>
+                </div>
+                <div class="beijing-cards-grid">
+                    <div class="beijing-card">
+                        <div class="card-number">01</div>
+                        <h3>Three Palm Leaves</h3>
+                        <p>Rising up and coming together to symbolize the country's unity and its agricultural roots.
+                        </p>
+                    </div>
+                    <div class="beijing-card">
+                        <div class="card-number">02</div>
+                        <h3>The Statues</h3>
+                        <p>Three massive bronze statues at the base represent the resistance, the national liberation
+                            army, and the modern army.</p>
+                    </div>
+                    <div class="beijing-card">
+                        <div class="card-number">03</div>
+                        <h3>El Mujahid Museum</h3>
+                        <p>An underground museum offering deep insights into the Algerian struggle for independence.</p>
+                    </div>
+                    <div class="beijing-card">
+                        <div class="card-number">04</div>
+                        <h3>The Esplanade</h3>
+                        <p>A sprawling plaza surrounding the monument that gathers locals and tourists alike.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- القسم الرابع: الهند (Discover The India In A New Way) -->
+    <section id="legacy" class="india-section">
+        <div class="container">
+            <div class="india-grid">
+                <div class="india-left">
+                    <div>
+                        <h2 class="india-headline">A Nation's<br>Pride</h2>
+                        <a href="#" class="play-link">
+                            <svg class="play-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10" />
+                                <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" />
+                            </svg>
+                            <span>WATCH THE HISTORY</span>
+                        </a>
+                    </div>
+                    <p class="india-desc-text">
+                        More than a monument, Maqa'am Echahid is the heart of Algiers. It serves as a reminder of the
+                        price of freedom and a beacon of hope for future generations.
+                    </p>
+                </div>
+                <div class="india-cards-grid">
+                    <div class="india-card">
+                        <div class="card-number">01</div>
+                        <h3>Independence Day</h3>
+                        <p>The site becomes a focal point for national celebrations and solemn remembrances every July
+                            5th.</p>
+                    </div>
+                    <div class="india-card">
+                        <div class="card-number">02</div>
+                        <h3>Panoramic Views</h3>
+                        <p>Situated on a hill, it offers unparalleled views of the Mediterranean Sea and the historic
+                            Casbah.</p>
+                    </div>
+                    <div class="india-card">
+                        <div class="card-number">03</div>
+                        <h3>Jardin d'Essai</h3>
+                        <p>Accessible via cable car, it lies close to the lush and historic Botanical Garden of Hamma.
+                        </p>
+                    </div>
+                    <div class="india-card">
+                        <div class="card-number">04</div>
+                        <h3>Cultural Hub</h3>
+                        <p>A central point for understanding Algerian history and experiencing the spirit of the
+                            capital.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="social-bar">
+                <a class="social-icon" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                    </svg>
+                </a>
+                <a class="social-icon" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M23.498 6.163a3.003 3.003 0 00-2.11-2.108C19.53 3.5 12 3.5 12 3.5s-7.53 0-9.388.555A3.003 3.003 0 00.5 6.163C0 8.024 0 12 0 12s0 3.976.502 5.837a3.003 3.003 0 002.11 2.108C4.47 20.5 12 20.5 12 20.5s7.53 0 9.388-.555a3.003 3.003 0 002.11-2.108C24 15.976 24 12 24 12s0-3.976-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                    </svg>
+                </a>
+                <a class="social-icon" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- القسم الخامس الجديد: 4 بطاقات ومساحة مركزية -->
+    <!-- ========================================== -->
+    <section id="significance" class="visual-grid-section">
+        <div class="container">
+            <div class="three-col-grid">
+
+                <!-- العمود الأيسر (بطاقتان متراصفتان) -->
+                <div class="col-left">
+                    <div class="glass-card">
+                        <h3 style="font-size: 16px; font-weight: 500; margin-bottom: 8px;">National Identity</h3>
+                        <p style="font-size: 13px; line-height: 1.5; color: rgba(255, 255, 255, 0.65);">
+                            The monument stands as a core symbol of the Algerian nation's enduring spirit and rich
+                            heritage.
+                        </p>
+                    </div>
+
+                    <div class="glass-card">
+                        <h3 style="font-size: 16px; font-weight: 500; margin-bottom: 8px;">Historical Memorial</h3>
+                        <p style="font-size: 13px; line-height: 1.5; color: rgba(255, 255, 255, 0.65);">
+                            A solemn tribute to the countless martyrs who sacrificed everything during the fight for
+                            independence.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- العمود الأوسط مفرغ -->
+                <div class="col-center">
+                </div>
+
+                <!-- العمود الأيمن (بطاقتان متراصفتان) -->
+                <div class="col-right">
+                    <div class="glass-card">
+                        <h3 style="font-size: 16px; font-weight: 500; margin-bottom: 8px;">Architectural Marvel</h3>
+                        <p style="font-size: 13px; line-height: 1.5; color: rgba(255, 255, 255, 0.65);">
+                            A masterpiece of modern concrete engineering, blending traditional symbolism with monumental
+                            scale.
+                        </p>
+                    </div>
+
+                    <div class="glass-card">
+                        <h3 style="font-size: 16px; font-weight: 500; margin-bottom: 8px;">Tourist Destination</h3>
+                        <p style="font-size: 13px; line-height: 1.5; color: rgba(255, 255, 255, 0.65);">
+                            Drawing millions of visitors each year to witness the panoramic views and delve into
+                            profound history.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
+    <script>
+        const canvas = document.getElementById('scroll-image');
+        const context = canvas.getContext('2d');
+
+        const frameCount = 128; // 000 to 127
+        const currentFrame = index => (
+            `website2_000/website2_${index.toString().padStart(3, '0')}.jpg`
+        );
+
+        const images = [];
+        let imagesLoaded = 0;
+
+        // Preload all images
+        for (let i = 0; i < frameCount; i++) {
+            const img = new Image();
+            img.src = currentFrame(i);
+            images.push(img);
+        }
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            render();
+        }
+
+        window.addEventListener('resize', resize);
+
+        let currentFrameIndex = 0;
+
+        function render() {
+            const img = images[currentFrameIndex];
+            if (img && img.complete && img.naturalWidth > 0) {
+                drawImageCover(img);
+            } else if (img) {
+                // If the current image isn't loaded yet, try again when it loads
+                img.onload = () => {
+                    if (images[currentFrameIndex] === img) {
+                        drawImageCover(img);
+                    }
+                };
+            }
+        }
+
+        function drawImageCover(image) {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Calculate aspect ratio for "cover" behavior
+            const hRatio = canvas.width / image.width;
+            const vRatio = canvas.height / image.height;
+            const ratio = Math.max(hRatio, vRatio);
+
+            const centerShift_x = (canvas.width - image.width * ratio) / 2;
+            const centerShift_y = (canvas.height - image.height * ratio) / 2;
+
+            context.drawImage(
+                image,
+                0, 0, image.width, image.height,
+                centerShift_x, centerShift_y, image.width * ratio, image.height * ratio
+            );
+        }
+
+        // Initial setup
+        images[0].onload = () => {
+            resize(); // trigger initial resize and render
+        };
+        // Just in case it's cached and already loaded
+        if (images[0].complete) {
+            resize();
+        }
+
+        // Scroll event listener
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop;
+            const maxScrollTop = document.documentElement.scrollHeight - window.innerHeight;
+
+            // To prevent divide by zero if page is not scrollable yet
+            if (maxScrollTop <= 0) return;
+
+            const scrollFraction = Math.max(0, Math.min(1, scrollTop / maxScrollTop));
+
+            const frameIndex = Math.min(
+                frameCount - 1,
+                Math.floor(scrollFraction * frameCount)
+            );
+
+            if (currentFrameIndex !== frameIndex) {
+                currentFrameIndex = frameIndex;
+                requestAnimationFrame(render);
+            }
+        });
+
+        // Intersection Observer for scroll flow animations
+        const animateObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const elementsToAnimate = document.querySelectorAll(`
+                h1, h2, h3, p, img, a, 
+                .glass-card, 
+                .beijing-card, 
+                .india-card, 
+                .timeline-node, 
+                .social-icon, 
+                svg
+            `);
+            
+            elementsToAnimate.forEach(el => {
+                el.classList.add('scroll-animate');
+                animateObserver.observe(el);
+            });
+
+            // Custom Scrollbar Logic
+            const customThumb = document.querySelector('.custom-scroll-thumb');
+            
+            function updateScrollbar() {
+                const viewportHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+                const maxScrollTop = documentHeight - viewportHeight;
+                
+                // Calculate proportional thumb height (minimum 30px)
+                const thumbHeight = Math.max((viewportHeight / documentHeight) * viewportHeight, 30);
+                customThumb.style.height = `${thumbHeight}px`;
+                
+                // Calculate thumb top offset
+                const scrollPercentage = maxScrollTop > 0 ? (window.scrollY / maxScrollTop) : 0;
+                const maxThumbTop = viewportHeight - thumbHeight;
+                customThumb.style.top = `${scrollPercentage * maxThumbTop}px`;
+            }
+            
+            window.addEventListener('scroll', updateScrollbar);
+            window.addEventListener('resize', updateScrollbar);
+            updateScrollbar(); // Call initially
+        });
+    </script>
+    
+    <div class="custom-scroll-track">
+        <div class="custom-scroll-thumb"></div>
+    </div>
+</body>
+
+</html>
