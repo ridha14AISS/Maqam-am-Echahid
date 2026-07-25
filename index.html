@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maqa'am Echahid — The Martyrs' Memorial</title>
-    
+
     <!-- أيقونة الموقع (Favicon) -->
     <link rel="icon" type="image/png" href="final/logo_transparent.png">
 
@@ -1035,8 +1035,62 @@
                 gap: 40px;
             }
 
+            /* Timeline Mobile Layout */
+            .timeline::before {
+                left: 0;
+            }
+
+            .timeline-dot {
+                left: 0;
+            }
+
+            .timeline-node {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .timeline-label {
+                position: relative;
+                top: auto;
+                left: auto;
+                right: auto;
+                transform: none;
+                text-align: left;
+                padding-left: 20px;
+                width: 100%;
+                margin-bottom: 15px;
+            }
+
+            .timeline-label.left-side {
+                left: auto;
+                right: auto;
+                text-align: left;
+            }
+
             .node-photos {
-                display: none;
+                position: relative;
+                top: auto;
+                transform: none;
+                margin-top: 5px;
+                margin-bottom: 10px;
+                padding-left: 20px;
+                /* Align with label */
+            }
+
+            .node-photos.osaka,
+            .node-photos.kyoto,
+            .node-photos.tokyo {
+                left: auto;
+                right: auto;
+            }
+
+            .node-photos.osaka img,
+            .node-photos.kyoto img,
+            .node-photos.tokyo img {
+                width: 100%;
+                max-width: 260px;
+                height: auto;
+                border-radius: 8px;
             }
         }
 
@@ -1117,27 +1171,6 @@
             .india-headline,
             .section-title {
                 font-size: 2rem;
-            }
-
-            /* Left-align timeline for small mobile screens */
-            .timeline::before {
-                left: 0;
-            }
-
-            .timeline-dot {
-                left: 0;
-            }
-
-            .timeline-label {
-                left: 20px;
-                white-space: normal;
-                width: calc(100vw - 60px);
-            }
-
-            .timeline-label.left-side {
-                right: auto;
-                left: 20px;
-                text-align: left;
             }
 
             /* Footer mobile */
@@ -1536,6 +1569,33 @@
         window.addEventListener('resize', resize);
 
         let currentFrameIndex = 0;
+        let targetFrameIndex = 0;
+        let currentFrameFloat = 0;
+        let animationFrameId = null;
+
+        function updateFrame() {
+            // Smoothly interpolate towards the target frame (lower factor = smoother)
+            currentFrameFloat += (targetFrameIndex - currentFrameFloat) * 0.12;
+
+            const nextFrameIndex = Math.round(currentFrameFloat);
+
+            if (nextFrameIndex !== currentFrameIndex) {
+                currentFrameIndex = nextFrameIndex;
+                render();
+            }
+
+            // Continue loop until the float value is extremely close to the target
+            if (Math.abs(targetFrameIndex - currentFrameFloat) > 0.05) {
+                animationFrameId = requestAnimationFrame(updateFrame);
+            } else {
+                currentFrameFloat = targetFrameIndex; // Snap exactly
+                if (currentFrameIndex !== targetFrameIndex) {
+                    currentFrameIndex = targetFrameIndex;
+                    render();
+                }
+                animationFrameId = null;
+            }
+        }
 
         function render() {
             const img = images[currentFrameIndex];
@@ -1593,9 +1653,12 @@
                 Math.floor(scrollFraction * frameCount)
             );
 
-            if (currentFrameIndex !== frameIndex) {
-                currentFrameIndex = frameIndex;
-                requestAnimationFrame(render);
+            if (targetFrameIndex !== frameIndex) {
+                targetFrameIndex = frameIndex;
+                // Start the smooth animation loop if it's not already running
+                if (!animationFrameId) {
+                    animationFrameId = requestAnimationFrame(updateFrame);
+                }
             }
         });
 
