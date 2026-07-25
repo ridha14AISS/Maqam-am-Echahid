@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maqa'am Echahid — The Martyrs' Memorial</title>
+    
+    <!-- أيقونة الموقع (Favicon) -->
+    <link rel="icon" type="image/png" href="final/logo_transparent.png">
 
     <!-- استيراد الخطوط المطلوبة: DM Sans للجسم و Playfair Display للعناوين المائلة -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,6 +53,7 @@
         ::-webkit-scrollbar {
             display: none;
         }
+
         html {
             scrollbar-width: none;
         }
@@ -63,9 +67,10 @@
             height: 100vh;
             background: transparent;
             z-index: 9999;
-            pointer-events: none; /* Allows clicking through */
+            pointer-events: none;
+            /* Allows clicking through */
         }
-        
+
         .custom-scroll-thumb {
             position: absolute;
             top: 0;
@@ -225,7 +230,7 @@
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             overflow: hidden;
         }
-        
+
         .glass-card::before {
             content: '';
             position: absolute;
@@ -249,7 +254,7 @@
             opacity: 1;
         }
 
-        .glass-card > * {
+        .glass-card>* {
             position: relative;
             z-index: 1;
         }
@@ -545,7 +550,7 @@
             opacity: 1;
         }
 
-        .beijing-card > * {
+        .beijing-card>* {
             position: relative;
             z-index: 1;
         }
@@ -597,7 +602,7 @@
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.7);
         }
-        
+
         .beijing-left .play-icon-svg {
             color: #ff8c00;
             filter: drop-shadow(0 0 8px rgba(255, 140, 0, 0.4));
@@ -686,7 +691,7 @@
             opacity: 1;
         }
 
-        .india-card > * {
+        .india-card>* {
             position: relative;
             z-index: 1;
         }
@@ -738,7 +743,7 @@
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.7);
         }
-        
+
         .india-left .play-icon-svg {
             color: #ff8c00;
             filter: drop-shadow(0 0 8px rgba(255, 140, 0, 0.4));
@@ -850,6 +855,150 @@
             fill: #ffffff;
         }
 
+        /* ========================================== */
+        /* 6. التذييل (Footer) */
+        /* ========================================== */
+        .main-footer {
+            width: 100%;
+            background-color: rgba(2, 2, 2, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 50px 0 10px 0;
+            /* Reduced bottom padding */
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 40px;
+            align-items: flex-start;
+            direction: rtl;
+            /* Right-to-left for Arabic */
+        }
+
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-related {
+            align-items: flex-start;
+        }
+
+        .footer-title {
+            color: #ff8c00;
+            /* Orange color */
+            font-size: 19px;
+            font-weight: 500;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .footer-links.horizontal-links {
+            flex-direction: row;
+            justify-content: center;
+            gap: 35px;
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            color: #d1d5d3;
+            text-decoration: none;
+            font-size: 14.5px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ffffff;
+            transform: translateX(-5px);
+        }
+
+        .footer-links.horizontal-links a:hover {
+            transform: translateY(-2px);
+            color: #ff8c00;
+        }
+
+        .footer-logo-col {
+            align-items: center;
+        }
+
+        .footer-logo {
+            margin-bottom: 15px;
+        }
+
+        .footer-logo img {
+            width: 110px;
+            height: 110px;
+            color: #e0e5e3;
+            transition: transform 0.4s ease, filter 0.4s ease;
+            object-fit: contain;
+        }
+
+        .footer-logo:hover img {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 10px rgba(255, 140, 0, 0.3));
+        }
+
+        .footer-brand {
+            font-size: 16px;
+            color: #e0e5e3;
+            font-weight: 500;
+        }
+
+        .footer-bottom {
+            margin-top: 40px;
+            /* Reduced top margin to compact footer */
+            text-align: center;
+            font-size: 13px;
+            color: #a0aab2;
+            direction: ltr;
+        }
+
+        .footer-bottom strong {
+            color: #ff8c00;
+            font-weight: 600;
+        }
+
+        .scroll-top-btn {
+            position: absolute;
+            bottom: 10px;
+            /* Moved closer to bottom edge */
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 140, 0, 0.1);
+            border: 1px solid rgba(255, 140, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ff8c00;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-top-btn:hover {
+            background-color: #ff8c00;
+            color: #ffffff;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(255, 140, 0, 0.3);
+        }
+
+        .scroll-top-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
         /* التكيف البرمجي مع الشاشات المتنوعة */
         @media (max-width: 991px) {
 
@@ -895,34 +1044,48 @@
             header {
                 padding-top: 15px;
             }
+
             .nav-pill {
                 gap: 16px;
                 padding: 10px 20px;
             }
+
             .nav-link {
                 font-size: 13px;
             }
+
             .hero-title {
                 font-size: clamp(2.5rem, 10vw, 3.5rem);
             }
+
             .hero-subtitle {
                 font-size: clamp(1.2rem, 5vw, 1.8rem);
             }
-            .beijing-card, .india-card, .glass-card {
+
+            .beijing-card,
+            .india-card,
+            .glass-card {
                 padding: 20px 18px;
             }
-            .beijing-card .card-number, .india-card .card-number {
+
+            .beijing-card .card-number,
+            .india-card .card-number {
                 font-size: 60px;
                 top: -5px;
             }
+
             .timeline-node {
                 margin-bottom: 90px;
             }
-            .beijing-left, .india-left {
+
+            .beijing-left,
+            .india-left {
                 text-align: center;
                 align-items: center;
             }
-            .beijing-history-text, .india-desc-text {
+
+            .beijing-history-text,
+            .india-desc-text {
                 margin-top: 20px;
             }
         }
@@ -932,38 +1095,66 @@
                 gap: 8px;
                 padding: 8px 12px;
             }
+
             .nav-link {
                 font-size: 11px;
             }
+
             .nav-logo svg {
                 width: 16px !important;
                 height: 16px !important;
             }
+
             .hero-title {
                 font-size: 2.2rem;
             }
+
             .hero-section {
                 padding-top: 100px;
             }
-            .beijing-headline, .india-headline, .section-title {
+
+            .beijing-headline,
+            .india-headline,
+            .section-title {
                 font-size: 2rem;
             }
+
             /* Left-align timeline for small mobile screens */
             .timeline::before {
                 left: 0;
             }
+
             .timeline-dot {
                 left: 0;
             }
+
             .timeline-label {
                 left: 20px;
                 white-space: normal;
                 width: calc(100vw - 60px);
             }
+
             .timeline-label.left-side {
                 right: auto;
                 left: 20px;
                 text-align: left;
+            }
+
+            /* Footer mobile */
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+                text-align: center;
+            }
+
+            .footer-related {
+                align-items: center;
+            }
+
+            .footer-links.horizontal-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
             }
         }
 
@@ -973,6 +1164,10 @@
             transform: translateY(40px);
             transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             will-change: opacity, transform;
+        }
+
+        .scroll-animate.hidden-top {
+            transform: translateY(-40px);
         }
 
         .scroll-animate.visible {
@@ -992,10 +1187,8 @@
             <a href="#about-monument" class="nav-link">History</a>
             <a href="#architecture" class="nav-link">Architecture</a>
             <div class="nav-logo" aria-label="Monument Logo">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                    style="width: 20px; height: 20px;">
-                    <path d="M12 2L8 22H16L12 2Z" fill="#FFFFFF" />
-                </svg>
+                <img src="final/logo_transparent.png" alt="Logo"
+                    style="width: 34px; height: 34px; object-fit: contain; filter: drop-shadow(0 0 2px rgba(255,255,255,0.5));">
             </div>
             <a href="#legacy" class="nav-link">Legacy</a>
             <a href="#significance" class="nav-link">Significance</a>
@@ -1060,8 +1253,7 @@
                                 <div class="city">The Structure</div>
                             </div>
                             <div class="node-photos osaka">
-                                <img src="photos/Screenshot 2026-07-25 112716.png"
-                                    alt="Monument View">
+                                <img src="photos/Screenshot 2026-07-25 112716.png" alt="Monument View">
                             </div>
                         </div>
                         <div class="timeline-node">
@@ -1071,8 +1263,7 @@
                                 <div class="city">Eternal Flame</div>
                             </div>
                             <div class="node-photos kyoto">
-                                <img src="photos/Screenshot 2026-07-25 112739.png"
-                                    alt="Flame">
+                                <img src="photos/Screenshot 2026-07-25 112739.png" alt="Flame">
                             </div>
                         </div>
                         <div class="timeline-node">
@@ -1082,8 +1273,7 @@
                                 <div class="city">The Museum</div>
                             </div>
                             <div class="node-photos tokyo">
-                                <img src="photos/Screenshot 2026-07-25 112821.png"
-                                    alt="Museum">
+                                <img src="photos/Screenshot 2026-07-25 112821.png" alt="Museum">
                             </div>
                         </div>
                     </div>
@@ -1267,6 +1457,57 @@
 
 
 
+    <!-- ========================================== -->
+    <!-- القسم السادس: التذييل (Footer) -->
+    <!-- ========================================== -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+
+                <!-- العمود الأيمن (الروابط ذات الصلة) -->
+                <div class="footer-col footer-related">
+                    <h3 class="footer-title">روابط ذات صلة</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">رئاسة الجمهورية</a></li>
+                        <li><a href="#">مصالح الوزير الأول</a></li>
+                        <li><a href="#">وزارة المجاهدين و ذوي الحقوق</a></li>
+                    </ul>
+                </div>
+
+                <!-- العمود الأوسط (روابط سريعة) -->
+                <div class="footer-col footer-nav">
+                    <ul class="footer-links horizontal-links">
+                        <li><a href="#">الرئيسية</a></li>
+                        <li><a href="#">من نحن</a></li>
+                        <li><a href="#">كلمة المدير</a></li>
+                        <li><a href="#">إتصل بنا</a></li>
+                    </ul>
+                </div>
+
+                <!-- العمود الأيسر (الشعار) -->
+                <div class="footer-col footer-logo-col">
+                    <div class="footer-logo">
+                        <img src="final/logo_transparent.png" alt="Monument Logo">
+                    </div>
+                    <div class="footer-brand">المتحف الوطني للمجاهد</div>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                Copyright &copy; 2026 المتحف الوطني للمجاهد | Designed by <strong>ridha aissani</strong>
+            </div>
+        </div>
+
+        <!-- زر العودة للأعلى -->
+        <a href="#" class="scroll-top-btn" aria-label="Scroll to top"
+            onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </a>
+    </footer>
+
     <script>
         const canvas = document.getElementById('scroll-image');
         const context = canvas.getContext('2d');
@@ -1363,23 +1604,32 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
+                    entry.target.classList.remove('hidden-top');
                 } else {
                     entry.target.classList.remove('visible');
+                    // Prevent infinite loop by pushing elements UP if they exit from the top
+                    if (entry.boundingClientRect.top < window.innerHeight / 2) {
+                        entry.target.classList.add('hidden-top');
+                    } else {
+                        entry.target.classList.remove('hidden-top');
+                    }
                 }
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
         document.addEventListener('DOMContentLoaded', () => {
             const elementsToAnimate = document.querySelectorAll(`
-                h1, h2, h3, p, img, a, 
+                h1, h2, h3, p, img, 
+                .btn-explore, .play-link, .footer-links a,
                 .glass-card, 
                 .beijing-card, 
                 .india-card, 
                 .timeline-node, 
                 .social-icon, 
-                svg
+                .play-icon-svg,
+                .footer-logo svg
             `);
-            
+
             elementsToAnimate.forEach(el => {
                 el.classList.add('scroll-animate');
                 animateObserver.observe(el);
@@ -1387,28 +1637,28 @@
 
             // Custom Scrollbar Logic
             const customThumb = document.querySelector('.custom-scroll-thumb');
-            
+
             function updateScrollbar() {
                 const viewportHeight = window.innerHeight;
                 const documentHeight = document.documentElement.scrollHeight;
                 const maxScrollTop = documentHeight - viewportHeight;
-                
+
                 // Calculate proportional thumb height (minimum 30px)
                 const thumbHeight = Math.max((viewportHeight / documentHeight) * viewportHeight, 30);
                 customThumb.style.height = `${thumbHeight}px`;
-                
+
                 // Calculate thumb top offset
                 const scrollPercentage = maxScrollTop > 0 ? (window.scrollY / maxScrollTop) : 0;
                 const maxThumbTop = viewportHeight - thumbHeight;
                 customThumb.style.top = `${scrollPercentage * maxThumbTop}px`;
             }
-            
+
             window.addEventListener('scroll', updateScrollbar);
             window.addEventListener('resize', updateScrollbar);
             updateScrollbar(); // Call initially
         });
     </script>
-    
+
     <div class="custom-scroll-track">
         <div class="custom-scroll-thumb"></div>
     </div>
